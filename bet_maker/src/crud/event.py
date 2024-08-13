@@ -1,3 +1,5 @@
+import datetime
+
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncSession
 from aio_pika.message import IncomingMessage
@@ -51,7 +53,13 @@ async def get_events(
         limit: int = 10,
         offset: int = 0
 ):
-    select_stmt = sa.select(models.Event).limit(limit).offset(offset)
+    select_stmt = (
+        sa.select(models.Event)
+        .where(models.Event.state == EventState.NEW)
+        .where(models.Event.deadline > datetime.datetime.now(datetime.timezone.utc))
+        .limit(limit)
+        .offset(offset)
+    )
     result = (await session.scalars(select_stmt)).all()
     await session.commit()
     return result
