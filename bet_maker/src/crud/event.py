@@ -36,11 +36,11 @@ async def update_event(
     await session.commit()
 
 
-async def calculate_bets(updated_event, session):
+async def calculate_bets(event, session: AsyncSession):
     update_stmt = (
         sa.update(models.Bet)
-        .where(models.Bet.event_id == updated_event.id)
-        .where(models.Bet.match_outcome == updated_event.state)
+        .where(models.Bet.event_id == event.id)
+        .where(models.Bet.match_outcome == event.state)
         .values(amount_of_winnings=models.Bet.coefficient*models.Bet.bet_amount)
     )
     await session.execute(update_stmt)
