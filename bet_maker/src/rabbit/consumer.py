@@ -6,7 +6,7 @@ from aio_pika.message import IncomingMessage
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.config import RMQ_LOGIN, RMQ_PASSWORD, RMQ_HOST
-from src.dependensies import get_async_session
+from src.db.database import async_session_factory
 
 
 RABBITMQ_URL = f"amqp://{RMQ_LOGIN}:{RMQ_PASSWORD}@{RMQ_HOST}/"
@@ -24,5 +24,5 @@ async def consume_queue(
         async with queue.iterator() as queue_iter:
             async for message in queue_iter:
                 async with message.process():
-                    session = await anext(get_async_session())
-                    await func(message, session)
+                    async with async_session_factory() as session:
+                        await func(message, session)
