@@ -1,6 +1,6 @@
 ## Start of microservices
 
-terminal_1: `docker-compose -f rabbitmq/docker-compose.yaml up_`  
+terminal_1: `docker-compose -f rabbitmq/docker-compose.yaml up`  
 terminal_2: `docker-compose -f line_provider/docker-compose.yaml up`  
 terminal_3: `docker-compose -f bet_maker/docker-compose.yaml up`  
 
