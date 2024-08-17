@@ -38,7 +38,7 @@ async def create_event(
         session: AsyncSession = Depends(get_async_session)
 ):
     event = await crud.event.create_event(session, payload)
-    await rabbit_connection.send("create_event_queque", event, EventViewSchema)
+    await rabbit_connection.send("create_event_queue", event, EventViewSchema)
     return event
 
 
@@ -51,5 +51,7 @@ async def update_event(
     updated_event = await crud.event.update_event(event_id, payload, session)
     if updated_event is None:
         raise HTTPException(status_code=404, detail="Event not found")
-    await rabbit_connection.send("update_event_queque", updated_event, EventViewSchema)
+    await rabbit_connection.send(
+        "update_event_queue", updated_event, EventViewSchema
+    )
     return updated_event
