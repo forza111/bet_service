@@ -15,6 +15,7 @@ async def create_bet(
         payload: BetCreateSchema,
         session: AsyncSession = Depends(get_async_session)
 ):
+    """Creating bet"""
     bet = await crud.bet.create_bet(session, payload)
     if bet is None:
         raise HTTPException(
@@ -29,5 +30,6 @@ async def get_bets(
         offset: int = 0,
         session: AsyncSession = Depends(get_async_session)
 ):
+    """Returning all bets"""
     bets = await crud.bet.get_bets(session, limit, offset)
     return bets

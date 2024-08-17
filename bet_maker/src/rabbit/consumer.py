@@ -15,7 +15,14 @@ RABBITMQ_URL: str = f"amqp://{RMQ_LOGIN}:{RMQ_PASSWORD}@{RMQ_HOST}/"
 async def consume_queue(
         name_queue: str,
         func: Callable[[IncomingMessage, AsyncSession], Awaitable]
-):
+) -> None:
+    """
+    Consuming queue and execution func
+
+    :param name_queue: str
+    :param func: Callable[[IncomingMessage, AsyncSession], Awaitable]
+    :return: None
+    """
     connection: aio_pika.abc.AbstractRobustConnection = await (
         aio_pika.connect_robust(RABBITMQ_URL, loop=asyncio.get_event_loop())
     )

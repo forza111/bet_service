@@ -18,10 +18,23 @@ class RabbitMQConnection:
     _channel: AbstractRobustChannel | None = None
 
     async def connect(self) -> None:
+        """
+        Connecting to broker
+
+        :return: None
+        """
         self._connection = await aio_pika.connect_robust(RABBITMQ_URL, loop=asyncio.get_event_loop())
         self._channel = await self._connection.channel()
 
     async def send(self, queue_name: str, data: Any, schema: type[pydantic.BaseModel]):
+        """
+        Sending message to queue
+
+        :param queue_name: str
+        :param data: Any
+        :param schema: type[pydantic.BaseModel]
+        :return: None
+        """
         message = Message(
             body=serialize_data(data, schema),
             content_type="application/json",

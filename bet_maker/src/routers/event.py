@@ -16,5 +16,6 @@ async def get_events(
         offset: int = 0,
         session: AsyncSession = Depends(get_async_session)
 ):
+    """Returning all available events"""
     events = await crud.event.get_events(session, limit, offset)
     return events
