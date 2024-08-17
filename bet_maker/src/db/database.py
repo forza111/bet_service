@@ -1,4 +1,5 @@
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+from sqlalchemy.ext.asyncio import (create_async_engine, async_sessionmaker,
+                                    AsyncEngine)
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.pool import NullPool
 
@@ -17,9 +18,9 @@ class Base(DeclarativeBase):
         return f"<{self.__class__.__name__} {','.join(cols)}>"
 
 
-ASYNC_DB_URL = f'postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}' \
-             f'@{DB_HOST}:{DB_PORT}/{DB_NAME}'
-async_engine = create_async_engine(
+ASYNC_DB_URL: str = (f'postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@'
+                     f'{DB_HOST}:{DB_PORT}/{DB_NAME}')
+async_engine: AsyncEngine = create_async_engine(
     ASYNC_DB_URL,
     echo=True,
     future=True,

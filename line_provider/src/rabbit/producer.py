@@ -10,7 +10,7 @@ from src.config import RMQ_LOGIN, RMQ_PASSWORD, RMQ_HOST
 from src.rabbit.serializer import serialize_data
 
 
-RABBITMQ_URL = f"amqp://{RMQ_LOGIN}:{RMQ_PASSWORD}@{RMQ_HOST}/"
+RABBITMQ_URL: str = f"amqp://{RMQ_LOGIN}:{RMQ_PASSWORD}@{RMQ_HOST}/"
 
 
 class RabbitMQConnection:

@@ -5,7 +5,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.dependensies import get_async_session
 from src.schemas.event import EventViewSchema, EventCreateSchema, EventUpdateSchema
 from src import crud
-# from src.rabbit.server import mq
 from src.rabbit.producer import rabbit_connection
 
 router = APIRouter()
